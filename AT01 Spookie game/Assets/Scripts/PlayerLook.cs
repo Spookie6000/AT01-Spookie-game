@@ -11,7 +11,7 @@ public class PlayerLook : MonoBehaviour
 
     [SerializeField] bool lookEnabled = true;
 
-
+   
 
     private Transform character;
     private Vector2 mouseDir;
