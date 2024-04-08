@@ -17,7 +17,7 @@ public class PlayerInteraction : MonoBehaviour
 
     // the maximim interaction distance 
     [SerializeField] private float iDistance;
-
+    [SerializeField] GameObject MyCamera;
     private bool gamePaused;
 
 
@@ -45,7 +45,7 @@ public class PlayerInteraction : MonoBehaviour
             {
                 RaycastHit hit;
 
-                if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, iDistance))
+                if (Physics.Raycast(MyCamera.transform.position, MyCamera.transform.forward, out hit, iDistance))
                 {
                     IInteraction interaction;
                     if (hit.collider.gameObject.TryGetComponent<IInteraction>(out interaction))

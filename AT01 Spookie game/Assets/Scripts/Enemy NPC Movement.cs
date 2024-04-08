@@ -14,6 +14,8 @@ public class EnemyNPCMovement : MonoBehaviour
 
     [SerializeField] private float viewDistance;
 
+    public float StunTime;
+
     private void Awake()
     {
         StateMachine = new FiniteStateMachine.StateMachine();
@@ -214,24 +216,49 @@ public class EnemyNPCMovement : MonoBehaviour
 
         }
 
-
-
-
-
-
-
-
-
         public override void OnExit()
         {
             Debug.Log("Leaving CHASE");
         }
-
-
-
-
-
     }
+
+   // public class StunState : NPCState
+  //  {
+      //  public float StunTime;
+       // public StunState(EnemyNPCMovement _intance) : base(_intance)
+        ///{
+
+        //}
+
+        //public override void OnEnter()
+      //  {
+
+           // Debug.Log("Stunned");
+       // }
+
+        //public override void OnUpdate()
+        //{
+            //StunTime += 3.5f;
+            //if (StunTime > 0)
+           // {
+
+           // }
+            
+
+            
+
+
+
+            //public override void OnExit()
+           // {
+           // Debug.Log("Stun over Run!!!");
+           // }
+       
+
+       
+        
+           
+       // }   
 }
 
 
