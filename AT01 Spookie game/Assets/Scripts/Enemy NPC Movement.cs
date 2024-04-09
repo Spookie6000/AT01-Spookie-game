@@ -14,13 +14,12 @@ public class EnemyNPCMovement : MonoBehaviour
 
     [SerializeField] private float viewDistance;
 
-    public float StunTime;
 
     private void Awake()
     {
         StateMachine = new FiniteStateMachine.StateMachine();
 
-      
+
     }
 
 
@@ -75,7 +74,7 @@ public class EnemyNPCMovement : MonoBehaviour
         {
             Debug.Log("Still in  idle");
 
-            if (timer > 0) 
+            if (timer > 0)
             {
                 timer -= Time.deltaTime;
             }
@@ -93,7 +92,7 @@ public class EnemyNPCMovement : MonoBehaviour
             foreach (Collider collider in hitCollider)
             {
                 if (collider.gameObject.TryGetComponent<PlayerMovment>(out PlayerMovment pMove))
-                {//checkinng if there anything be
+                {//checkinng if there anything be dectied 
                     RaycastHit hit;
                     Vector3 derection = instance.player.transform.position - instance.transform.position;
                     if (Physics.Raycast(instance.transform.position, derection, out hit, 15f))
@@ -137,7 +136,7 @@ public class EnemyNPCMovement : MonoBehaviour
         {
             Debug.Log("Entering patrol");
 
-           
+
 
         }
         public override void OnUpdate()
@@ -150,15 +149,15 @@ public class EnemyNPCMovement : MonoBehaviour
                 {
                     RaycastHit hit;
                     Vector3 derection = instance.player.transform.position - instance.transform.position;
-                    if(Physics.Raycast(instance.transform.position, derection, out hit , instance.viewDistance))
+                    if (Physics.Raycast(instance.transform.position, derection, out hit, instance.viewDistance))
                     {
-                        if(hit.collider.gameObject.TryGetComponent<PlayerMovment>(out PlayerMovment pMove2))
+                        if (hit.collider.gameObject.TryGetComponent<PlayerMovment>(out PlayerMovment pMove2))
                         {
 
                             float angle = Vector3.Angle(derection, instance.transform.forward);
                             if (angle < 45f)
                             {
-                                if(angle >-45f)
+                                if (angle > -45f)
                                 {
                                     instance.controller.SetTrigger("walk");
                                     instance.StateMachine.SetState(new ChaseState(instance));
@@ -175,8 +174,8 @@ public class EnemyNPCMovement : MonoBehaviour
                         }
                     }
 
-                  
-                    
+
+
                 }
             }
         }
@@ -187,7 +186,7 @@ public class EnemyNPCMovement : MonoBehaviour
         }
 
         // class for chasing state  
-       
+
 
     }
     public class ChaseState : NPCState
@@ -199,7 +198,7 @@ public class EnemyNPCMovement : MonoBehaviour
         {
             Debug.Log("Entering CHASE");
 
-            
+
 
         }
         public override void OnUpdate()
@@ -207,7 +206,7 @@ public class EnemyNPCMovement : MonoBehaviour
             Debug.Log("Still in  CHASE");
 
             // The NPC loss the player and goes back to IdelState
-            if (Vector3.Distance(instance.transform.position,  instance.player.transform.position) > instance.viewDistance * 1.5f)
+            if (Vector3.Distance(instance.transform.position, instance.player.transform.position) > instance.viewDistance * 1.5f)
             {
                 instance.controller.SetTrigger("run");
                 instance.StateMachine.SetState(new IdelState(instance));
@@ -222,43 +221,6 @@ public class EnemyNPCMovement : MonoBehaviour
         }
     }
 
-   // public class StunState : NPCState
-  //  {
-      //  public float StunTime;
-       // public StunState(EnemyNPCMovement _intance) : base(_intance)
-        ///{
-
-        //}
-
-        //public override void OnEnter()
-      //  {
-
-           // Debug.Log("Stunned");
-       // }
-
-        //public override void OnUpdate()
-        //{
-            //StunTime += 3.5f;
-            //if (StunTime > 0)
-           // {
-
-           // }
-            
-
-            
-
-
-
-            //public override void OnExit()
-           // {
-           // Debug.Log("Stun over Run!!!");
-           // }
-       
-
-       
-        
-           
-       // }   
 }
 
 
