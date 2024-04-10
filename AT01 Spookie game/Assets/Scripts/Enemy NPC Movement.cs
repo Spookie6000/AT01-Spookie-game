@@ -6,17 +6,21 @@ using UnityEngine.AI;
 
 public class EnemyNPCMovement : MonoBehaviour
 {
-
+    // StateMachine for handling the AI enemy
     public StateMachine StateMachine { get; private set; }
+    // Calling the PLayer script 
     [SerializeField] PlayerMovment player;
-
+    // Animaor controller 
     [SerializeField] private Animator controller;
-
+    // AI viewing Distance 
     [SerializeField] private float viewDistance;
+    // Stun timer 
+    public float StunTime; 
 
 
     private void Awake()
     {
+        //Calls StateMachine 
         StateMachine = new FiniteStateMachine.StateMachine();
 
 
@@ -66,21 +70,21 @@ public class EnemyNPCMovement : MonoBehaviour
         public override void OnEnter()
         {
             Debug.Log("Entering idle");
-
+            // Trigger Idel Animation
             instance.controller.SetTrigger("idel");
 
         }
         public override void OnUpdate()
         {
             Debug.Log("Still in  idle");
-
+            // timer for state change 
             if (timer > 0)
             {
                 timer -= Time.deltaTime;
             }
             else
             {
-
+                // Changes to partol state
                 instance.controller.SetTrigger("walk");
                 instance.StateMachine.SetState(new PatrolState(instance));
 
@@ -214,11 +218,43 @@ public class EnemyNPCMovement : MonoBehaviour
 
 
         }
-
         public override void OnExit()
         {
             Debug.Log("Leaving CHASE");
         }
+    }
+    public class StunState : NPCState
+    {
+
+        float stunTimer;
+        public StunState(EnemyNPCMovement _instance, float stunTime) : base(_instance) 
+        {
+             stunTime = stunTime;
+        }
+        
+        public override void OnEnter() 
+        {
+            // Tigger Stun animation 
+            instance.controller.SetTrigger("stun");
+        
+        }
+        public override void OnUpdate()
+        {
+            // Setting the stun timer 
+            stunTimer -= Time.deltaTime;
+            if (stunTimer <= 0)
+            {
+                //Changes to Idel when stun is over 
+                instance.StateMachine.SetState(new IdelState(instance));
+            }
+        }
+
+
+    }
+    // Setting stun methed call
+    public void ActiateStun(float stunDuraction)
+    {
+        StateMachine.SetState(new StunState(this, stunDuraction));
     }
 
 }
