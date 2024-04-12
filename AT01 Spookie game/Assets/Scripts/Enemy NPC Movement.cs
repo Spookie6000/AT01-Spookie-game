@@ -229,7 +229,7 @@ public class EnemyNPCMovement : MonoBehaviour
         float stunTimer;
         public StunState(EnemyNPCMovement _instance, float stunTime) : base(_instance) 
         {
-             stunTime = stunTime;
+             stunTimer = stunTime;
         }
         
         public override void OnEnter() 
@@ -252,7 +252,7 @@ public class EnemyNPCMovement : MonoBehaviour
 
     }
     // Setting stun methed call
-    public void ActiateStun(float stunDuraction)
+    public void Stun(float stunDuraction)
     {
         StateMachine.SetState(new StunState(this, stunDuraction));
     }

@@ -16,7 +16,7 @@ public class EventManger : MonoBehaviour
         }
         else
         {
-            Debug.Log("You can only have one event manager in the scene");
+            Debug.Log("You can only have one event manager in the scene"); 
             gameObject.SetActive(false);
         }
     }

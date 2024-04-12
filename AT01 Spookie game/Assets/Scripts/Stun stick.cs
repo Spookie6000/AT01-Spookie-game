@@ -14,22 +14,25 @@ public class Stunstick : MonoBehaviour
     {
         // Find enemy movement script
         enemyNPCMovement = GetComponent<EnemyNPCMovement>();
-        if (enemyNPCMovement == null )
+        if (enemyNPCMovement == null) 
+        {
+            Debug.LogError("EnemyNPCMovemrnt not found");
+        }
 
     }
-    // Activate StunState 
+    // Activate StunState
     public void ActivateStun()
     {
         if (enemyNPCMovement != null) 
         {
             // calls the StunState form enemy script
             enemyNPCMovement.Stun(stunDuration);
-            Debug.log("Stunned");
+            Debug.Log("Stunned");
         }
         else
         {
 
-            Debug.logError("Stunned failled");
+            Debug.LogError("Stunned failled");
 
 
         }
