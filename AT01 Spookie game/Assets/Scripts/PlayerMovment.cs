@@ -77,7 +77,7 @@ public class PlayerMovment : MonoBehaviour
 
 
     private void PlayerInput()
-    {
+    {   // Set the isGrounded bool 
         isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
 
         if (isGrounded && velocity.y < 0)
@@ -85,7 +85,7 @@ public class PlayerMovment : MonoBehaviour
             velocity.y = -2f;
 
         }
-
+        // Set the Movement for Basic movement 
         float x = Input.GetAxis("Horizontal");
         float z = Input.GetAxis("Vertical");
 
