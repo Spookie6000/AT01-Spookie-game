@@ -4,6 +4,8 @@ using UnityEngine;
 using FiniteStateMachine;
 using UnityEngine.AI;
 
+//public enum PatrolTime(patrol);
+
 public class EnemyNPCMovement : MonoBehaviour
 {
     // StateMachine for handling the AI enemy
@@ -15,14 +17,19 @@ public class EnemyNPCMovement : MonoBehaviour
     // AI viewing Distance 
     [SerializeField] private float viewDistance;
     // Stun timer 
-    public float StunTime; 
+    public float StunTime;
+   // List of patrolPoints 
+    public Transform[] patrolPoint;
 
+    private NavMeshAgnet navMeshAgnet;
+   
 
     private void Awake()
     {
         //Calls StateMachine 
         StateMachine = new FiniteStateMachine.StateMachine();
-
+        // Calls the NavMeshAagent 
+        navMeshAgnet = GetComponent < NavMeshAgent();
 
     }
 
@@ -139,13 +146,25 @@ public class EnemyNPCMovement : MonoBehaviour
         public override void OnEnter()
         {
             Debug.Log("Entering patrol");
+            // Set the NavMeshAgent first partol point
+            if(instance.patrolPoints.Count > 0) 
+            {
+                // Move to the next Patrol Point
+                instance.currentPatrolIndex = (instance.currentPatrolIndex + 1) % instance.patrolPoints.Count;
+                instance.navMeshAgent.SetDestination(instance.patrolPoints[instance.currentPatrolIndex].position);
 
 
-
+            }      
+   
         }
         public override void OnUpdate()
         {
             Debug.Log("Still in  patrol");
+            // Has the Enemy reach the patrol point
+            if(!instance.NavMeshAgent.pathPending && instance.navMeshAgent.remainingDistance);
+
+            // looking for player movement
+
             Collider[] hitCollider = Physics.OverlapSphere(instance.transform.position, instance.viewDistance);
             foreach (Collider collider in hitCollider)
             {
@@ -163,7 +182,7 @@ public class EnemyNPCMovement : MonoBehaviour
                             {
                                 if (angle > -45f)
                                 {
-                                    instance.controller.SetTrigger("walk");
+                                    instance.controller.SetTrigger("Pa");
                                     instance.StateMachine.SetState(new ChaseState(instance));
 
                                 }
@@ -189,10 +208,11 @@ public class EnemyNPCMovement : MonoBehaviour
             Debug.Log("Leaving patrol");
         }
 
-        // class for chasing state  
+         
 
 
     }
+       // class for chasing state 
     public class ChaseState : NPCState
     {
         public ChaseState(EnemyNPCMovement _intance) : base(_intance)

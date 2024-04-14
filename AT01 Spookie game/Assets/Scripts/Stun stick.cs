@@ -16,7 +16,7 @@ public class Stunstick : MonoBehaviour
         enemyNPCMovement = GetComponent<EnemyNPCMovement>();
         if (enemyNPCMovement == null) 
         {
-            Debug.LogError("EnemyNPCMovemrnt not found");
+            //Debug.LogError("EnemyNPCMovement not found");
         }
 
     }
