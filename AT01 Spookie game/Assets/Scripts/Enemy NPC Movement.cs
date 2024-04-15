@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using FiniteStateMachine;
 using UnityEngine.AI;
+using System.Linq;
 
 //public enum PatrolTime(patrol);
 
@@ -18,10 +19,15 @@ public class EnemyNPCMovement : MonoBehaviour
     [SerializeField] private float viewDistance;
     // Stun timer 
     public float StunTime;
-   // List of patrolPoints 
-    public Transform[] patrolPoint;
-
-    private NavMeshAgnet navMeshAgnet;
+    // List of patrolPoints 
+   // bool PatrolPoint;
+   // list of PatrolPoints 
+    List<GameObject> patrolPoints = new List<GameObject>();
+    // List of privacte patrolpoints
+    //public int currentPatrolIndex;
+    // NaveMeshAgent 
+    private NavMeshAgent navMeshAgent;
+   
    
 
     private void Awake()
@@ -29,7 +35,7 @@ public class EnemyNPCMovement : MonoBehaviour
         //Calls StateMachine 
         StateMachine = new FiniteStateMachine.StateMachine();
         // Calls the NavMeshAagent 
-        navMeshAgnet = GetComponent < NavMeshAgent();
+        navMeshAgent = GetComponent < NavMeshAgent> ();
 
     }
 
@@ -143,25 +149,80 @@ public class EnemyNPCMovement : MonoBehaviour
     {
         public PatrolState(EnemyNPCMovement _intance) : base(_intance)
         { }
+        //  int of currentpatrolindex
+        int currentPatrolIndex;
         public override void OnEnter()
         {
+       
+          
+
             Debug.Log("Entering patrol");
             // Set the NavMeshAgent first partol point
-            if(instance.patrolPoints.Count > 0) 
+           instance. navMeshAgent.SetDestination(instance.patrolPoints[0].transform.position);
+            //set 'currentPatrolIndex' to 0
+            currentPatrolIndex = 0;
+
+
+
+          
+            
+
+
+
+
+
+
+           /* if (instance.patrolPoints.) 
             {
                 // Move to the next Patrol Point
-                instance.currentPatrolIndex = (instance.currentPatrolIndex + 1) % instance.patrolPoints.Count;
+                //instance.currentPatrolIndex = (instance.currentPatrolIndex + 1) % instance.patrolPoints.Count;
                 instance.navMeshAgent.SetDestination(instance.patrolPoints[instance.currentPatrolIndex].position);
 
 
-            }      
+            } */     
    
         }
         public override void OnUpdate()
         {
+
+            //check if the Agent is within stopping distance of current destination
+            if (instance.navMeshAgent.remainingDistance < instance.navMeshAgent.stoppingDistance) 
+            {
+                //if yes: increase currentPatrolIndex by 1
+                 currentPatrolIndex += 1;
+                if currentPatrolIndex 
+                {
+                    currentPatrolIndex > instance.patrolPoints
+
+
+
+                }
+                //check if currentPatrolIndex+1 is over the limit
+
+                //if yes: go to idle
+                instance.StateMachine.SetState(new IdelState(instance));
+
+                
+               else
+
+                    //if no:
+                    //set navmeshagent destination to 'listOfWaypoint[currentPatrolIndex]'
+                    instance.navMeshAgent.destination = instance.patrolPoints[currentPatrolIndex].transform.position;
+
+
+
+                
+              
+
+
+
+            }
+
+
+
             Debug.Log("Still in  patrol");
             // Has the Enemy reach the patrol point
-            if(!instance.NavMeshAgent.pathPending && instance.navMeshAgent.remainingDistance);
+           /* if(!instance.navMeshAgent.pathPending && instance.navMeshAgent.remainingDistance > 0);*/
 
             // looking for player movement
 
