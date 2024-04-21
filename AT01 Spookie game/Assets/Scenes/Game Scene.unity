@@ -3273,10 +3273,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b57699e41384db641a1458250ec50c3d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 147518196}
-  controller: {fileID: 998887814}
-  viewDistance: 5
-  StunTime: 3.5
 --- !u!95 &998887814
 Animator:
   serializedVersion: 5
@@ -5002,7 +4998,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 26b75a947deb2a64db61d7d690598c8e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  stunDuration: 3.5
 --- !u!1 &1636742861
 GameObject:
   m_ObjectHideFlags: 0
