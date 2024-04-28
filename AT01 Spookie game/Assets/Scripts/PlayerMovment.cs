@@ -161,16 +161,9 @@ public class PlayerMovment : MonoBehaviour
 
         }
 
-
-        private void OnDestroy()
-        {
-            EventManger.pauseGameEvent -= TogglePaused;
-
-
-        }
     }
-
-
-
-   
-
+    private void OnDestroy()
+    {
+        EventManger.pauseGameEvent -= TogglePaused;
+    }
+}
