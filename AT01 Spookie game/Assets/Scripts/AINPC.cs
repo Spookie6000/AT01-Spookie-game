@@ -69,11 +69,11 @@ public class AINPC : MonoBehaviour
     // Update view distance based on player's movement
     void UpdateViewDistance()
     {
-        if (player.IsSprinting())
+        if (player.IsSprinting)
         {
             currentViewDistance = baseViewDistance * sprintViewConeMultiplier;
         }
-        else if (player.IsCrouchWalking())
+        else if (player.IsCrouching)
         {
             currentViewDistance = baseViewDistance * crouchViewConeMultiplier;
         }

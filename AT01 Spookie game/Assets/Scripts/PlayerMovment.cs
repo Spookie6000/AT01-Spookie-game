@@ -25,7 +25,7 @@ public class PlayerMovment : MonoBehaviour
     private float currentStamina;
 
 
-    private bool isSpriting = false;
+    private bool isSprinting = false;
     private bool isCrouchingWalking = false;
     private float gravityValue = -9.81f;
     private Vector3 playerVelocity;
@@ -85,9 +85,9 @@ public class PlayerMovment : MonoBehaviour
             PlayerInput();
         }
         // Stamina Over Tinme
-        if (!isSpriting && currentStamina < maxStamina)
+        if (!isSprinting && currentStamina < maxStamina)
         {
-            currentStamina += sprintStaminaRecoveryRate * Time.deletaTime;
+            currentStamina += sprintStaminaRecoveryRate * Time.deltaTime;
             currentStamina = Mathf.Clamp(currentStamina, 0, maxStamina);
 
         }
@@ -141,7 +141,7 @@ public class PlayerMovment : MonoBehaviour
             // Takes stamina while sprinting 
             if (isSprinting)
             {
-                currentStamina -= sprintStaminaConsumptionRate * Time.deltaTime;
+                currentStamina -= sprinStaminaDrainRate * Time.deltaTime;
                 // sets current stamina 
                 currentStamina = Mathf.Clamp(currentStamina, 0f, maxStamina);
             }
@@ -151,11 +151,11 @@ public class PlayerMovment : MonoBehaviour
             // Crouch walking input
             if (Input.GetKeyDown(KeyCode.LeftControl))
             {
-                isCrouchWalking = true;
+                isCrouchingWalking = true;
             }
             else if (Input.GetKeyUp(KeyCode.LeftControl))
             {
-                isCrouchWalking = false;
+                isCrouchingWalking = false;
             }
 
 
