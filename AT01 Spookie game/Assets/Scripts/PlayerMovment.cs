@@ -15,7 +15,9 @@ public class PlayerMovment : MonoBehaviour
     [SerializeField] private float spritSpeed = 10f;
     [SerializeField] private float crouchSpeed = 2.5f;
     // Srinting cooldown 
-    [SerializeField] private float sprintCooldown = 3f;
+    [SerializeField] private bool sprintCooldown = false;
+    private float sprintCooldownTimer = 0f;
+    private float sprintCooldownDuration = 3f;
     // Jump Hieght 
     [SerializeField] private float jumpHeight = 1.0f;
     // Stamina Variables 
@@ -84,12 +86,20 @@ public class PlayerMovment : MonoBehaviour
         {
             PlayerInput();
         }
-        // Stamina Over Tinme
+        // Stamina Over Time
         if (!isSprinting && currentStamina < maxStamina)
         {
             currentStamina += sprintStaminaRecoveryRate * Time.deltaTime;
             currentStamina = Mathf.Clamp(currentStamina, 0, maxStamina);
 
+        }
+        if (sprintCooldown)
+        {
+            sprintCooldownTimer -= Time.deltaTime;
+            if (sprintCooldownTimer <= 0f)
+            {
+                isSprinting = false;
+            }
         }
 
     }
@@ -128,9 +138,11 @@ public class PlayerMovment : MonoBehaviour
         velocity.y += gravityValue * Time.deltaTime;
         cTroller.Move(velocity * Time.deltaTime);
         // Starts the spriting and checks the stamina 
-        if (Input.GetKeyDown(KeyCode.LeftShift) && !isSprinting && currentStamina > 0)
+        if (Input.GetKeyDown(KeyCode.LeftShift) && !isSprinting && !sprintCooldown && currentStamina > 0)
         {
             isSprinting = true;
+            sprintCooldown = true;
+            sprintCooldownTimer = sprintCooldownDuration;
             Debug.Log("Out of Stamina");
 
             //Stop sprintting

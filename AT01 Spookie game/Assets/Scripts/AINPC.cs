@@ -92,7 +92,9 @@ public class AINPC : MonoBehaviour
         {
             if (hit.collider.CompareTag("Player"))
             {
+                Debug.Log("I SEEE YOOOU");
                 return true;
+               
             }
         }
         return false;
@@ -131,10 +133,15 @@ public class AINPC : MonoBehaviour
                             for (int i = 0; i < patrolPoints.Length; i++)
                             {
                                 agent.SetDestination(patrolPoints[i].position);
+                                // Stop at patrol point
+                                while(Vector3.Distance(transform.position, patrolPoints[i].position) > agent.stoppingDistance)
+                                {
+                                    yield return null;
+                                }
                                 yield return new WaitForSeconds(2f); // Adjust delay between each point
                             }
                         }
-                    }
+                    }   
                     yield return null;
                     break;
 
