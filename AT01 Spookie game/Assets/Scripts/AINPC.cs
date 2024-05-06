@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 /// <summary>
@@ -119,13 +120,22 @@ public class AINPC : MonoBehaviour
                     // Trigger patrol animation
                     controller.SetTrigger("PatrolTrigger");
                     // Perform actions for patrol state
-                    if (patrolPoints.Length > 0)
+
+
+
+
+
+                    if (Vector3.Distance(transform.position,agent.destination) < agent.stoppingDistance)
                     {
+
+
+
                         if (randomSequence)
                         {
                             // Choose a random patrol point
                             int randomIndex = Random.Range(0, patrolPoints.Length);
                             agent.SetDestination(patrolPoints[randomIndex].position);
+
                         }
                         else
                         {
