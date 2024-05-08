@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEditor.SceneManagement;
 using UnityEngine;
+using UnityEditor.UI;
+using UnityEngine.UIElements;
 /// <summary>
 /// Chat GPT Has been used to modify this script
 /// </summary>
@@ -10,35 +12,17 @@ using UnityEngine;
 public class PlayerMovment : MonoBehaviour
 {
     private CharacterController cTroller;
-    // Sets the speed for the movement
-    [SerializeField] private float moveSpeed = 5.0f;
-    [SerializeField] private float spritSpeed = 10f;
-    [SerializeField] private float crouchSpeed = 2.5f;
-    // Srinting cooldown 
-    [SerializeField] private bool sprintCooldown = false;
-    private float sprintCooldownTimer = 0f;
-    private float sprintCooldownDuration = 3f;
-    // Jump Hieght 
+    public Slider instance;
+
+    [SerializeField] private float speed = 3.0f;
     [SerializeField] private float jumpHeight = 1.0f;
-    // Stamina Variables 
-    [SerializeField] private float maxStamina = 100;
-    [SerializeField] private float sprinStaminaDrainRate = 20f;
-    [SerializeField] private float sprintStaminaRecoveryRate = 10f;
-    private float currentStamina;
 
-
-    private bool isSprinting = false;
-    private bool isCrouchingWalking = false;
+ 
     private float gravityValue = -9.81f;
     private Vector3 playerVelocity;
     private bool groundedPlayer;
 
-    // Sets the properties to get the sprinting and crouch 
-    public bool IsSprinting => isSprinting;
-    public bool IsCrouching => isCrouchingWalking;
-
-
-    private Vector3 velocity;
+    Vector3 velocity;
 
     public Transform groundCheck;
     public float groundDistance = 0.4f;
@@ -60,23 +44,26 @@ public class PlayerMovment : MonoBehaviour
     void Start()
     {
 
-        /*if (Instance == null)
+        if (Instance == null)
         {
             Instance = this;
-        }*/
+        }
+
+
+
+
 
         gamePaused = false;
-        cTroller = GetComponent<CharacterController>();
-        currentStamina = maxStamina;
+        //cTroller = GetComponent<CharacterController>();
 
 
-        /* if (!TryGetComponent<CharacterController>(out cTroller))
-         {
-             Debug.Log("you need to attach a CharaterController to the player object you human");
+        if (!TryGetComponent<CharacterController>(out cTroller))
+        {
+            Debug.Log("you need to attach a CharaterController to the player object you human");
 
-             gameObject.SetActive(false);
+            gameObject.SetActive(false);
 
-         }*/
+        }
     }
 
     // Update is called once per frame
@@ -85,21 +72,6 @@ public class PlayerMovment : MonoBehaviour
         if (!gamePaused)
         {
             PlayerInput();
-        }
-        // Stamina Over Time
-        if (!isSprinting && currentStamina < maxStamina)
-        {
-            currentStamina += sprintStaminaRecoveryRate * Time.deltaTime;
-            currentStamina = Mathf.Clamp(currentStamina, 0, maxStamina);
-
-        }
-        if (sprintCooldown)
-        {
-            sprintCooldownTimer -= Time.deltaTime;
-            if (sprintCooldownTimer <= 0f)
-            {
-                isSprinting = false;
-            }
         }
 
     }
@@ -112,7 +84,7 @@ public class PlayerMovment : MonoBehaviour
 
 
     private void PlayerInput()
-    {   // Set the isGrounded bool 
+    {
         isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
 
         if (isGrounded && velocity.y < 0)
@@ -120,13 +92,11 @@ public class PlayerMovment : MonoBehaviour
             velocity.y = -2f;
 
         }
-        // Set the Movement for Basic movement 
+
         float x = Input.GetAxis("Horizontal");
         float z = Input.GetAxis("Vertical");
 
         Vector3 move = transform.right * x + transform.forward * z;
-
-        float speed = IsSprinting ? spritSpeed : (isCrouchingWalking ? crouchSpeed : moveSpeed);
 
         cTroller.Move(move * speed * Time.deltaTime);
 
@@ -134,48 +104,15 @@ public class PlayerMovment : MonoBehaviour
         {
             velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravityValue);
         }
-        // add garvity 
+
         velocity.y += gravityValue * Time.deltaTime;
         cTroller.Move(velocity * Time.deltaTime);
-        // Starts the spriting and checks the stamina 
-        if (Input.GetKeyDown(KeyCode.LeftShift) && !isSprinting && !sprintCooldown && currentStamina > 0)
-        {
-            isSprinting = true;
-            sprintCooldown = true;
-            sprintCooldownTimer = sprintCooldownDuration;
-            Debug.Log("Out of Stamina");
 
-            //Stop sprintting
-            if (Input.GetKeyUp(KeyCode.LeftShift) || currentStamina <= 0)
-            {
-                isSprinting = false;
-            }
-            // Takes stamina while sprinting 
-            if (isSprinting)
-            {
-                currentStamina -= sprinStaminaDrainRate * Time.deltaTime;
-                // sets current stamina 
-                currentStamina = Mathf.Clamp(currentStamina, 0f, maxStamina);
-            }
-
-
-
-            // Crouch walking input
-            if (Input.GetKeyDown(KeyCode.LeftControl))
-            {
-                isCrouchingWalking = true;
-            }
-            else if (Input.GetKeyUp(KeyCode.LeftControl))
-            {
-                isCrouchingWalking = false;
-            }
-
-
-        }
 
     }
     private void OnDestroy()
     {
         EventManger.pauseGameEvent -= TogglePaused;
     }
+
 }

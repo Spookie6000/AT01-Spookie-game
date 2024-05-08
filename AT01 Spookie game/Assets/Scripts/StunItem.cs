@@ -4,30 +4,15 @@ using UnityEngine;
 
 public class StunItem : MonoBehaviour
 {
-    public AINPC aiNPC;
-
-    public float stunD = 3.5f;
-   
-    public void ActivateStun()
+    // Start is called before the first frame update
+    void Start()
     {
-        if (aiNPC == null)
-        {
-            aiNPC.Stun(stunD);
-        }
-        else
-        {
-            Debug.Log("AINPC script is not set in StunTriggerItem script");
-        }
-
-        gameObject.SetActive(false);
-
-
+        
     }
-    private void OnTriggerEnter(Collider other)
+
+    // Update is called once per frame
+    void Update()
     {
-       if (other.CompareTag("Player"))
-        {
-            ActivateStun();
-        }
+        
     }
 }
