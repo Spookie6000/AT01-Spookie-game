@@ -247,12 +247,13 @@ public class EnemyNPCMovement : MonoBehaviour
             Debug.Log("Entering StunState");
             
             //IF Stun Item is used on enemy 
-            // then aplly stun for sevounds
+            // then aplly stun for time
+
             if (stunIItem.GetComponent<StunItem>() != null) 
             {
                 instance.controller.SetTrigger("Stun");
 
-
+                stunTimer = Time.time;
 
             }
 
