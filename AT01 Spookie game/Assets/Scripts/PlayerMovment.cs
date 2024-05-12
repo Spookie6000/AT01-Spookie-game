@@ -107,7 +107,9 @@ public class PlayerMovment : MonoBehaviour
 
         velocity.y += gravityValue * Time.deltaTime;
         cTroller.Move(velocity * Time.deltaTime);
-
+        // Player Sprint
+        if (Input.GetKeyDown(KeyCode.LeftShift))
+            StamiaBar.instance.UseStamaina(15);
 
     }
     private void OnDestroy()
