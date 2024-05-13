@@ -135,7 +135,19 @@ public class EnemyNPCMovement : MonoBehaviour
         {
 
         }
-       
+
+        public override void OnEnter()
+        {
+            Debug.Log("Entering Patrol");
+            instance.wanderCount = Random.Range(1, 5);
+
+            int ran = Random.Range(0, instance.wayPoints.Count - 1);
+            GameObject randowWaypoint = instance.wayPoints[ran];
+
+            instance.agent.SetDestination(randowWaypoint.transform.position);
+        }
+
+
         public override void OnUpdate()
         {
             if(Vector3.Distance(instance.transform.position, instance.agent.destination) < instance.agent.stoppingDistance)
@@ -286,7 +298,7 @@ public class EnemyNPCMovement : MonoBehaviour
             
         }
 
-
+        
         public override void OnExit()
         {
             Debug.Log("No longer Stunned ");

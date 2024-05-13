@@ -31,6 +31,11 @@ public class EventManger : MonoBehaviour
     public delegate void UnlockDoor(int id);
     public static UnlockDoor unlockDoorEvent;
 
+    public delegate void StunItembat(int id);
+    public static StunItembat stunItemEvent;
+
+
+
     public delegate void PauseGame(bool toggle);
     public static PauseGame pauseGameEvent;
 

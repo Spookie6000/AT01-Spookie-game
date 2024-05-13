@@ -14,8 +14,15 @@ public class PlayerMovment : MonoBehaviour
     private CharacterController cTroller;
     public Slider instance;
 
+    [SerializeField] private bool canDotheSprint = true;
+
+
+
+
+    [SerializeField] private float SprintSpeed = 6.0f;
     [SerializeField] private float speed = 3.0f;
     [SerializeField] private float jumpHeight = 1.0f;
+
 
  
     private float gravityValue = -9.81f;
@@ -92,14 +99,14 @@ public class PlayerMovment : MonoBehaviour
             velocity.y = -2f;
 
         }
-
+        // Player walkin
         float x = Input.GetAxis("Horizontal");
         float z = Input.GetAxis("Vertical");
 
         Vector3 move = transform.right * x + transform.forward * z;
 
         cTroller.Move(move * speed * Time.deltaTime);
-
+        // Player Jump
         if (Input.GetButtonDown("Jump") && isGrounded)
         {
             velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravityValue);
@@ -107,6 +114,8 @@ public class PlayerMovment : MonoBehaviour
 
         velocity.y += gravityValue * Time.deltaTime;
         cTroller.Move(velocity * Time.deltaTime);
+        //Player Sprint
+        
 
 
     }
