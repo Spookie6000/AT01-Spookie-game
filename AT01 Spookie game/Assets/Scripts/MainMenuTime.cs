@@ -5,9 +5,9 @@ using UnityEngine.SceneManagement;
 
 public class MainMenuTime : MonoBehaviour
 {
-  public void PlayTime()
+  public void PlayTime(int GameScene)
   {     // Loads the next Scene in the Queue 
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+        SceneManager.LoadScene(GameScene);
 
   }
 
@@ -17,5 +17,16 @@ public class MainMenuTime : MonoBehaviour
     Application.Quit();
     
   }
+
+    public void ReturnToMainMenu(int MenuScene)
+    {
+        // Returns to Main MenuScene
+        SceneManager.LoadScene(MenuScene);
+
+
+
+    }
+
+
 
 }

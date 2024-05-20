@@ -44,6 +44,5 @@ public class MenuMainer : MonoBehaviour
         Debug.Log("QUIT THE GAME");
         Application.Quit();
     }
-
-
+  
 }

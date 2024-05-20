@@ -16,6 +16,7 @@ public class PlayerMovment : MonoBehaviour
 
     [SerializeField] private float speed = 3.0f;
     [SerializeField] private float jumpHeight = 1.0f;
+   // [SerializeField] private float sprintSpeed = 6.0f;
 
  
     private float gravityValue = -9.81f;
@@ -108,8 +109,14 @@ public class PlayerMovment : MonoBehaviour
         velocity.y += gravityValue * Time.deltaTime;
         cTroller.Move(velocity * Time.deltaTime);
         // Player Sprint
-        if (Input.GetKeyDown(KeyCode.LeftShift))
-       ;
+       /* if (Input.GetKeyDown(KeyCode.LeftShift));
+        {
+            cTroller.Move(move * sprintSpeed * Time.deltaTime);
+        }*/
+        
+       
+ 
+        
 
     }
     private void OnDestroy()
