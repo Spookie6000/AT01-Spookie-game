@@ -12,7 +12,7 @@ using UnityEngine.UIElements;
 public class PlayerMovment : MonoBehaviour
 {
     private CharacterController cTroller;
-    public Slider instance;
+   
 
     [SerializeField] private float speed = 3.0f;
     [SerializeField] private float jumpHeight = 1.0f;
@@ -109,7 +109,7 @@ public class PlayerMovment : MonoBehaviour
         cTroller.Move(velocity * Time.deltaTime);
         // Player Sprint
         if (Input.GetKeyDown(KeyCode.LeftShift))
-            StamiaBar.instance.UseStamaina(15);
+       ;
 
     }
     private void OnDestroy()

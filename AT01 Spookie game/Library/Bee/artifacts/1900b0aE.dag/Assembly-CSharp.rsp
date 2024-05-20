@@ -371,7 +371,6 @@
 "Assets/Scripts/Player Interaction.cs"
 "Assets/Scripts/PlayerLook.cs"
 "Assets/Scripts/PlayerMovment.cs"
-"Assets/Scripts/StamiaBar.cs"
 "Assets/Scripts/StunItem.cs"
 -langversion:9.0
 
