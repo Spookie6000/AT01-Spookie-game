@@ -10,6 +10,8 @@ public class EnemyNPCMovement : MonoBehaviour
 
     [SerializeField] PlayerMovment player;
 
+    [SerializeField] PlayerInteraction playerInteraction;
+
     [SerializeField] NavMeshAgent agent;
 
     [SerializeField] List<GameObject> wayPoints = new List<GameObject>();
@@ -24,7 +26,6 @@ public class EnemyNPCMovement : MonoBehaviour
 
     [SerializeField] private AudioClip chaseClip;
 
-    [SerializeField] GameObject stunIItem;
     private void Awake()
     {
         StateMachine = new StateMachine();
@@ -167,7 +168,7 @@ public class EnemyNPCMovement : MonoBehaviour
                     instance.StateMachine.SetState(new IdleState(instance));
                 }
             }
-
+            //Setting view cone
             Collider[] hitColliders = Physics.OverlapSphere(instance.transform.position, instance.viewDistance);
             foreach (Collider collider in hitColliders)
             {
@@ -219,7 +220,7 @@ public class EnemyNPCMovement : MonoBehaviour
         public override void OnEnter()
         {
             Debug.Log("Entering chase state");
-
+            //Set Ai to follow player di
             instance.agent.SetDestination(instance.player.transform.position);
 
             instance.audioSource.PlayOneShot(instance.chaseClip);
@@ -227,7 +228,7 @@ public class EnemyNPCMovement : MonoBehaviour
         public override void OnUpdate()
         {
             Debug.Log("Still chasing");
-            // 
+            // If the player is in view go back to Idle
             instance.agent.SetDestination(instance.player.transform.position);
 
             if (Vector3.Distance(instance.transform.position, instance.player.transform.position) > instance.viewDistance * 1.5f)
@@ -250,24 +251,17 @@ public class EnemyNPCMovement : MonoBehaviour
 
         }
 
-        float stunTimer;
-        GameObject stunIItem;
+        float stunTimer = 3.5f;
+        
 
 
         public override void OnEnter()
         {
             Debug.Log("Entering StunState");
+            // Stun Timer 
+           stunTimer = Time.time;
+
             
-            //IF Stun Item is used on enemy 
-            // then aplly stun for time
-
-            if (stunIItem.GetComponent<StunItem>() != null) 
-            {
-                instance.controller.SetTrigger("Stun");
-
-                stunTimer = Time.time;
-
-            }
 
 
 
@@ -305,6 +299,14 @@ public class EnemyNPCMovement : MonoBehaviour
         }
     }
 
+    public void ActivateStunState()
+    {
+        StateMachine.SetState(new StunState(this));
+
+
+
+
+    }
 
 
 }

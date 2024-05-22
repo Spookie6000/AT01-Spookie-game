@@ -14,9 +14,9 @@ public class PlayerMovment : MonoBehaviour
     private CharacterController cTroller;
    
 
-    [SerializeField] private float speed = 3.0f;
+    [SerializeField] private float speed = 6.0f;
     [SerializeField] private float jumpHeight = 1.0f;
-   // [SerializeField] private float sprintSpeed = 6.0f;
+    [SerializeField] private float sprintSpeed = 6.0f;
 
  
     private float gravityValue = -9.81f;

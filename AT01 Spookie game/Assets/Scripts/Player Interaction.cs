@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.WSA;
 
 
 /*
@@ -18,7 +19,13 @@ public class PlayerInteraction : MonoBehaviour
     // the maximim interaction distance 
     [SerializeField] private float iDistance;
     [SerializeField] GameObject MyCamera;
+    [SerializeField] bool stunItem;
+    [SerializeField] GameObject Enemy;
+
+
+    private EnemyNPCMovement enemyNPC;
     private bool gamePaused;
+    float stunTimer;
 
 
 
@@ -34,10 +41,42 @@ public class PlayerInteraction : MonoBehaviour
 
     private void Start()
     {
+        enemyNPC = Enemy.GetComponent<EnemyNPCMovement>();   
+
 
     }
     private void Update()
     {
+      if (stunItem)    
+       {
+            if (Input.GetButtonDown("StunButton"))
+            {
+                RaycastHit hit;
+
+                if (Physics.Raycast(MyCamera.transform.position, MyCamera.transform.forward, out hit, iDistance))
+                {
+                    if (hit.collider.gameObject.CompareTag("Enemy"))
+                    {
+                        // Activate Stun State
+                        enemyNPC.ActivateStunState();
+                    }
+                }
+
+            }
+
+
+
+
+        }
+        
+           
+        
+      
+        
+        
+
+
+
         if (!gamePaused)
         {
             // check for player left clicking 
@@ -66,4 +105,6 @@ public class PlayerInteraction : MonoBehaviour
 
         gamePaused = toggle;
     }
+
+   
 }

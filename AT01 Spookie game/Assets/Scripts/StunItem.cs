@@ -4,16 +4,18 @@ using UnityEngine;
 
 
 public class StunItem : MonoBehaviour, IInteraction
-{   
+{
+    public bool stunItem;
 
     public void Activate()
     {
-     
-
-
-        Debug.Log("Where's the Ball(Pick up StunBat)");
 
         gameObject.SetActive(false);
+
+        Debug.Log("Where's the Ball(Pick up StunBat)");
+        
+        stunItem = true;
+
     }
 
 }
