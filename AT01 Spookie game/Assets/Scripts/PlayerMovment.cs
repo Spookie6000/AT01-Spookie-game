@@ -5,20 +5,19 @@ using UnityEditor.SceneManagement;
 using UnityEngine;
 using UnityEditor.UI;
 using UnityEngine.UIElements;
-/// <summary>
-/// Chat GPT Has been used to modify this script
-/// </summary>
+
 
 public class PlayerMovment : MonoBehaviour
 {
     private CharacterController cTroller;
-   
 
-    [SerializeField] private float speed = 6.0f;
+    [SerializeField] private float speed = 3.0f;
+    [SerializeField] public float walkspeed = 3.0f;
     [SerializeField] private float jumpHeight = 1.0f;
     [SerializeField] private float sprintSpeed = 6.0f;
+    [SerializeField] private float sneakSpeed = 2.0f;
 
- 
+
     private float gravityValue = -9.81f;
     private Vector3 playerVelocity;
     private bool groundedPlayer;
@@ -86,6 +85,7 @@ public class PlayerMovment : MonoBehaviour
 
     private void PlayerInput()
     {
+        // Player Ground check
         isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
 
         if (isGrounded && velocity.y < 0)
@@ -100,7 +100,26 @@ public class PlayerMovment : MonoBehaviour
         Vector3 move = transform.right * x + transform.forward * z;
 
         cTroller.Move(move * speed * Time.deltaTime);
+        
+        if (Input.GetButton("Run"))
+        {
+            speed = sprintSpeed;
+            Debug.LogFormat("Sprinting");
 
+
+        }
+        else if (Input.GetButton("Sneak"))
+        {
+            speed = sneakSpeed;
+        }
+        else
+        {
+            speed = walkspeed;
+
+        }
+
+        cTroller.Move(move * speed * Time.deltaTime);
+       
         if (Input.GetButtonDown("Jump") && isGrounded)
         {
             velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravityValue);
@@ -108,20 +127,19 @@ public class PlayerMovment : MonoBehaviour
 
         velocity.y += gravityValue * Time.deltaTime;
         cTroller.Move(velocity * Time.deltaTime);
-        // Player Sprint
-       /* if (Input.GetKeyDown(KeyCode.LeftShift));
-        {
-            cTroller.Move(move * sprintSpeed * Time.deltaTime);
-        }*/
-        
-       
- 
-        
+
+
+
+
+
+
+
+
+
 
     }
     private void OnDestroy()
     {
         EventManger.pauseGameEvent -= TogglePaused;
     }
-
 }

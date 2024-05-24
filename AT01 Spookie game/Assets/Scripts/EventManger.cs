@@ -34,7 +34,12 @@ public class EventManger : MonoBehaviour
     public delegate void StunItembat(int id);
     public static StunItembat stunItemEvent;
 
+    public delegate void PlayerSprint(int id);
+    public static PlayerSprint playerSprintEvent;
 
+    public delegate void PlayerSneak(int id);
+    public static PlayerSneak playerSneakEvent;
+  
 
     public delegate void PauseGame(bool toggle);
     public static PauseGame pauseGameEvent;

@@ -68,14 +68,6 @@ public class PlayerInteraction : MonoBehaviour
 
 
         }
-        
-           
-        
-      
-        
-        
-
-
 
         if (!gamePaused)
         {

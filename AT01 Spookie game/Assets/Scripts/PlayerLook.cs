@@ -62,7 +62,7 @@ public class PlayerLook : MonoBehaviour
 
         }
 
-        if (Input.GetButton("Pause"))
+        if (Input.GetButtonDown("Pause"))
         {
             if (gamepaused == true)
             {
