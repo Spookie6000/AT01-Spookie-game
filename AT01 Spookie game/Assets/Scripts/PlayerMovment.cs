@@ -32,10 +32,16 @@ public class PlayerMovment : MonoBehaviour
 
     bool gamePaused;
 
+    bool playerSprint;
+
+    bool playerSneak;
+
     public static PlayerMovment Instance;
     private void OnEnable()
     {
         EventManger.pauseGameEvent += TogglePaused;
+        EventManger.playerSprintEvent += TogglePlayerSprint;
+        EventManger.playerSneakEvent += TogglePlayerSneak;
 
     }
 
@@ -74,6 +80,37 @@ public class PlayerMovment : MonoBehaviour
             PlayerInput();
         }
 
+        if (!playerSprint)
+        {
+            if (Input.GetButtonDown("Run"))
+            {
+                if (playerSprint == true)
+                {
+                    EventManger.playerSprintEvent(true);
+                    
+                }
+                else
+                {
+                    EventManger.playerSprintEvent(false);
+                }
+            }
+            
+        }
+
+        if (!playerSneak)
+        {
+            if(Input.GetButtonDown("Sneak"))
+            {
+                if (playerSneak == true)
+                {
+                    EventManger.playerSneakEvent(true);
+                }
+                else
+                {
+                    EventManger.pauseGameEvent(false);
+                }
+            }
+        }
     }
     private void TogglePaused(bool toggled)
     {
@@ -81,6 +118,14 @@ public class PlayerMovment : MonoBehaviour
         gamePaused = toggled;
     }
 
+    private void TogglePlayerSprint(bool toggled)
+    {
+        playerSprint = toggled;
+    }
+    private void TogglePlayerSneak( bool toggled)
+    {
+        playerSneak = toggled;
+    }
 
 
     private void PlayerInput()
@@ -104,13 +149,14 @@ public class PlayerMovment : MonoBehaviour
         if (Input.GetButton("Run"))
         {
             speed = sprintSpeed;
-            Debug.LogFormat("Sprinting");
-
+            Debug.Log("Sprinting");
+           
 
         }
         else if (Input.GetButton("Sneak"))
         {
             speed = sneakSpeed;
+            Debug.Log("Player Sneaking");
         }
         else
         {
@@ -128,18 +174,11 @@ public class PlayerMovment : MonoBehaviour
         velocity.y += gravityValue * Time.deltaTime;
         cTroller.Move(velocity * Time.deltaTime);
 
-
-
-
-
-
-
-
-
-
     }
     private void OnDestroy()
     {
         EventManger.pauseGameEvent -= TogglePaused;
+        EventManger.playerSprintEvent -= TogglePlayerSprint;
+        EventManger.playerSneakEvent -= TogglePlayerSneak;
     }
 }

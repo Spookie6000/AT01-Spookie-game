@@ -34,12 +34,14 @@ public class EventManger : MonoBehaviour
     public delegate void StunItembat(int id);
     public static StunItembat stunItemEvent;
 
-    public delegate void PlayerSprint(int id);
+    public delegate void PlayerSprint(bool toggle);
     public static PlayerSprint playerSprintEvent;
 
-    public delegate void PlayerSneak(int id);
+    public delegate void PlayerSneak(bool toggle);
     public static PlayerSneak playerSneakEvent;
   
+    public delegate void EnemyViewNormal(bool toggle);
+    public static EnemyViewNormal enemyViewNormalEvent;
 
     public delegate void PauseGame(bool toggle);
     public static PauseGame pauseGameEvent;

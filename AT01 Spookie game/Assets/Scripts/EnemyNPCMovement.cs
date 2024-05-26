@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using FiniteStateMachine;
 using UnityEngine.AI;
+using UnityEngine.UI;
 
 public class EnemyNPCMovement : MonoBehaviour
 {
@@ -26,6 +27,23 @@ public class EnemyNPCMovement : MonoBehaviour
 
     [SerializeField] private AudioClip chaseClip;
 
+    bool playerSprint;
+    bool playerSneak;
+    bool enemyViewnNormal;
+
+
+    private void OnEnable()
+    {
+        EventManger.playerSprintEvent += TogglePlayerSprint;
+        EventManger.playerSprintEvent += TogglePlayerSneak;
+        EventManger.enemyViewNormalEvent += ToggleEnemyViewNormal;
+    }
+    private void OnDestroy()
+    {
+        EventManger.playerSprintEvent -= TogglePlayerSprint;
+        EventManger.playerSneakEvent -= TogglePlayerSneak;
+        EventManger.enemyViewNormalEvent -= ToggleEnemyViewNormal; 
+    }
     private void Awake()
     {
         StateMachine = new StateMachine();
@@ -42,8 +60,28 @@ public class EnemyNPCMovement : MonoBehaviour
     {
         //call 'onupdate' for whatever the currentstate is
         StateMachine.OnUpdate();
+
+        
+
+        
+
+
+
+
+    }
+    private void TogglePlayerSprint(bool toggled)
+    {
+        playerSprint = toggled;
+    }
+    private void TogglePlayerSneak(bool toggled)
+    {
+        playerSneak = toggled;
     }
 
+    private void ToggleEnemyViewNormal(bool toggled)
+    {
+        enemyViewnNormal = toggled;
+    }
     //abstact class called 'NPCState' which inhericts fron IState
     public abstract class NPCState : IState
     {
@@ -308,6 +346,47 @@ public class EnemyNPCMovement : MonoBehaviour
 
     }
 
+    public void EnemyViewDistance()
+    {
+        if(!playerSprint)
+        {
+            if (Input.GetButtonDown("Run"))
+            {
+                if(playerSprint == true) 
+                {
+                 // Increase view distance
+                 
+
+
+
+                }
+                else 
+                {
+                    // set view distance to normal 
+                    
+                }
+
+
+            }
+
+        }
+        
+        if (!playerSneak) 
+        {
+            if (playerSneak == true)
+            {
+               //Decrease view diestance
+
+
+
+            }
+    
+        
+        
+        }
+        
+
+    }
 
 }
 
