@@ -12,6 +12,7 @@ public class IKey : MonoBehaviour, IInteraction
     {
         // call the 'picjed up keyt event' and pass it out keycode value
         EventManger.unlockDoorEvent((int)keyCode);
+        EventManger.endgameEvent(true);
 
 
 

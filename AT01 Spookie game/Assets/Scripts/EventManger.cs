@@ -46,6 +46,9 @@ public class EventManger : MonoBehaviour
     public delegate void PauseGame(bool toggle);
     public static PauseGame pauseGameEvent;
 
+    public delegate void Endgame (bool toggle);
+    public static Endgame endgameEvent;
+
 
 
 }

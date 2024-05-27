@@ -554,8 +554,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 3
+  walkspeed: 3
   jumpHeight: 1
   sprintSpeed: 6
+  sneakSpeed: 2
   groundCheck: {fileID: 1691065870}
   groundDistance: 0.4
   groundMask:
@@ -3654,7 +3656,7 @@ NavMeshAgent:
   m_Speed: 100
   m_Acceleration: 8
   avoidancePriority: 50
-  m_AngularSpeed: 120
+  m_AngularSpeed: 280
   m_StoppingDistance: 3
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
@@ -3685,7 +3687,7 @@ MonoBehaviour:
   - {fileID: 557786537}
   wanderCount: 1
   controller: {fileID: 998887814}
-  viewDistance: 45
+  viewDistance: 4
   audioSource: {fileID: 0}
   chaseClip: {fileID: 0}
 --- !u!114 &798325263

@@ -30,19 +30,21 @@ public class EnemyNPCMovement : MonoBehaviour
     bool playerSprint;
     bool playerSneak;
     bool enemyViewnNormal;
-
+    bool endGmae;
 
     private void OnEnable()
     {
         EventManger.playerSprintEvent += TogglePlayerSprint;
         EventManger.playerSprintEvent += TogglePlayerSneak;
         EventManger.enemyViewNormalEvent += ToggleEnemyViewNormal;
+        EventManger.endgameEvent += ToggleEndgame;
     }
     private void OnDestroy()
     {
         EventManger.playerSprintEvent -= TogglePlayerSprint;
         EventManger.playerSneakEvent -= TogglePlayerSneak;
-        EventManger.enemyViewNormalEvent -= ToggleEnemyViewNormal; 
+        EventManger.enemyViewNormalEvent -= ToggleEnemyViewNormal;
+        EventManger.endgameEvent -= ToggleEndgame;
     }
     private void Awake()
     {
@@ -61,13 +63,13 @@ public class EnemyNPCMovement : MonoBehaviour
         //call 'onupdate' for whatever the currentstate is
         StateMachine.OnUpdate();
 
-        
+  
+    }
 
-        
-
-
-
-
+    private void ToggleEndgame(bool toggled) 
+    {
+        endGmae = toggled;
+    
     }
     private void TogglePlayerSprint(bool toggled)
     {
@@ -109,6 +111,10 @@ public class EnemyNPCMovement : MonoBehaviour
 
         public override void OnEnter()
         {
+            if(instance.endGmae== true) 
+            {
+                instance.StateMachine.SetState(new ChaseState(instance));
+            }
             Debug.Log("Entering idle");
         }
         public override void OnUpdate()
@@ -124,7 +130,7 @@ public class EnemyNPCMovement : MonoBehaviour
                 instance.controller.SetTrigger("walk");
                 instance.StateMachine.SetState(new PatrolState(instance));
             }
-
+            instance.EnemyViewDistance();
             //create an overlapshere to see if the player is in spotting distance
             Collider[] hitColliders = Physics.OverlapSphere(instance.transform.position, instance.viewDistance);
             foreach(Collider collider in hitColliders)
@@ -177,6 +183,10 @@ public class EnemyNPCMovement : MonoBehaviour
 
         public override void OnEnter()
         {
+            if(instance.endGmae == true)
+            {
+                instance.StateMachine.SetState(new ChaseState(instance));
+            }
             Debug.Log("Entering Patrol");
             instance.wanderCount = Random.Range(1, 5);
 
@@ -206,6 +216,7 @@ public class EnemyNPCMovement : MonoBehaviour
                     instance.StateMachine.SetState(new IdleState(instance));
                 }
             }
+            instance.EnemyViewDistance();
             //Setting view cone
             Collider[] hitColliders = Physics.OverlapSphere(instance.transform.position, instance.viewDistance);
             foreach (Collider collider in hitColliders)
@@ -297,9 +308,9 @@ public class EnemyNPCMovement : MonoBehaviour
         {
             Debug.Log("Entering StunState");
             // Stun Timer 
-           stunTimer = Time.time;
+            //stunTimer = Time.time;
+            instance.controller.SetTrigger("stun");
 
-            
 
 
 
@@ -318,7 +329,7 @@ public class EnemyNPCMovement : MonoBehaviour
             {
                 //stun Enemy
 
-                instance.controller.SetTrigger("stun");
+                //instance.controller.SetTrigger("stun");
                 stunTimer -= Time.deltaTime;
             
             
@@ -348,43 +359,22 @@ public class EnemyNPCMovement : MonoBehaviour
 
     public void EnemyViewDistance()
     {
-        if(!playerSprint)
+       if (playerSprint== true)
         {
-            if (Input.GetButtonDown("Run"))
-            {
-                if(playerSprint == true) 
-                {
-                 // Increase view distance
-                 
-
-
-
-                }
-                else 
-                {
-                    // set view distance to normal 
-                    
-                }
-
-
-            }
-
+            viewDistance = 24f;
         }
-        
-        if (!playerSneak) 
+        else if(playerSneak == true) 
         {
-            if (playerSneak == true)
-            {
-               //Decrease view diestance
+            viewDistance = 6f;
 
-
-
-            }
-    
-        
         
         }
-        
+       else 
+       {
+            viewDistance = 12f;
+                
+       }
+
 
     }
 
