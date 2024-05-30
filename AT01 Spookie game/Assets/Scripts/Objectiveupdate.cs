@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEditor.UI;
 using TMPro;
 using UnityEngine.UI;
 
@@ -11,9 +10,7 @@ public class Objectiveupdate : MonoBehaviour
     [SerializeField] private TMP_Text text;
     [SerializeField] private Image imageCooldown;
 
-    //variables for cooldowntimer
-    private bool iscooldown = false;
-    private float cooldownTimer = 0;
+    
     private
 
   

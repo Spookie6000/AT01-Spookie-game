@@ -1,10 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
-using UnityEditor.SceneManagement;
 using UnityEngine;
-using UnityEditor.UI;
-using UnityEngine.UIElements;
+
 
 
 public class PlayerMovment : MonoBehaviour
